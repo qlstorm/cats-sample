@@ -6,7 +6,7 @@ use lib\Cats;
 
 class Father {
 
-    public static function add($param = 0) {
-        Cats::addFather($_POST, $param);
+    public static function add($catId = 0) {
+        Cats::addFather($_POST, (int)$catId);
     }
 }
