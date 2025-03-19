@@ -63,6 +63,18 @@ class Cats {
     }
 
     public static function getMotherOptions($id) {
+        $filter = [
+            'female = 1'
+        ];
+
+        if ($id) {
+            $filter[] = 'cats.id <> ' . (int)$id;
+
+            $filter[] = 'age > (
+                select age from cats where id = ' . (int)$id . '
+            )';
+        }
+
         $query = '
             select
                 cats.id,
@@ -70,16 +82,7 @@ class Cats {
             from cats
         ';
 
-        if ($id) {
-            $query .= '
-                where
-                    cats.id <> ' . (int)$id . ' and
-                    female = 1 and
-                    age > (
-                        select age from cats where id = ' . (int)$id . '
-                    )
-            ';
-        }
+        $query .= ' where ' . implode(' and ', $filter);
 
         return Connection::query($query)->fetch_all(MYSQLI_ASSOC);
     }

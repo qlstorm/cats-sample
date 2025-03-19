@@ -18,8 +18,6 @@ class Father {
             return;
         }
 
-        $res = Connection::query('select id from cats_fathers where cat_id = ' . (int)$catId)->fetch_all();
-
         $list = Cats::getFatherOptions($catId);
 
         require 'views/cats_add_father.php';
