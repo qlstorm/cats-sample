@@ -93,6 +93,9 @@ class Cats {
             where
                 cats.id <> ' . (int)$catId . ' and
                 female is null and
+                age > (
+                    select age from cats where id = ' . (int)$catId . '
+                ) and
                 cats.id not in (
                     select id from cats_fathers where cat_id = ' . (int)$catId . '
                 )
