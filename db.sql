@@ -4,11 +4,13 @@ CREATE TABLE IF NOT EXISTS `cats` (
 	`age` INT,
 	`female` TINYINT,
 	`mother_id` INT,
-	PRIMARY KEY (`id`) USING BTREE
+	PRIMARY KEY (`id`) USING BTREE,
+	INDEX `mother_id` (`mother_id`) USING BTREE
 );
 
 CREATE TABLE IF NOT EXISTS `cats_fathers` (
 	`id` INT,
 	`cat_id` INT,
-	INDEX `cat_id` (`cat_id`) USING BTREE
+	INDEX `cat_id` (`cat_id`) USING BTREE,
+	INDEX `id` (`id`) USING BTREE
 );

@@ -62,12 +62,41 @@ class Cats {
         return $list;
     }
 
-    public static function getOptions($noIdList) {
-        $query = 'select id, name from cats';
+    public static function getMotherOptions($id) {
+        $query = '
+            select
+                cats.id,
+                cats.name
+            from cats
+        ';
 
-        if ($noIdList) {
-            $query .= ' where id not in ('. implode(', ', $noIdList) . ')';
+        if ($id) {
+            $query .= '
+                where
+                    cats.id <> ' . (int)$id . ' and
+                    female = 1 and
+                    age > (
+                        select age from cats where id = ' . (int)$id . '
+                    )
+            ';
         }
+
+        return Connection::query($query)->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public static function getFatherOptions($catId) {
+        $query = '
+            select
+                cats.id,
+                cats.name
+            from cats
+            where
+                cats.id <> ' . (int)$catId . ' and
+                female is null and
+                cats.id not in (
+                    select id from cats_fathers where cat_id = ' . (int)$catId . '
+                )
+        ';
 
         return Connection::query($query)->fetch_all(MYSQLI_ASSOC);
     }

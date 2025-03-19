@@ -18,19 +18,9 @@ class Father {
             return;
         }
 
-        $row = Connection::query('select mother_id from cats where id = ' . (int)$catId)->fetch_assoc();
-
         $res = Connection::query('select id from cats_fathers where cat_id = ' . (int)$catId)->fetch_all();
 
-        $noIdList = array_column($res, 0);
-
-        $noIdList[] = (int)$catId;
-
-        if ($row['mother_id']) {
-            $noIdList[] = $row['mother_id'];
-        }
-
-        $list = Cats::getOptions($noIdList);
+        $list = Cats::getFatherOptions($catId);
 
         require 'views/cats_add_father.php';
     }

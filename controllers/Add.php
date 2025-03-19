@@ -36,7 +36,7 @@ class Add {
             }
         }
 
-        $list = Cats::getOptions([(int)$id]);
+        $list = Cats::getMotherOptions((int)$id);
 
         require 'views/cats_add.php';
     }
