@@ -4,8 +4,16 @@
     female:
         <select name="female">
             <option></option>
-            <option value="0" <?= $femaleSelect[0] ?>>no</option>
-            <option value="1" <?= $femaleSelect[1] ?>>yes</option>
+
+            <?php foreach ($femaleFilter as $femaleValue) { ?>
+                <option value="<?= $femaleValue['value'] ?>" <?= $femaleValue['selected'] ?>><?= $femaleValue['name'] ?></option>
+            <?php } ?>
+        </select>
+    order:
+        <select name="order">
+            <?php foreach ($orders as $order) { ?>
+                <option value="<?= $order['value'] ?>" <?= $order['selected'] ?>><?= $order['name'] ?></option>
+            <?php } ?>
         </select>
     <input type="submit">
 </form>
@@ -14,6 +22,7 @@
 
 <table>
     <tr>
+        <td>id</td>
         <td>name</td>
         <td>mother</td>
         <td>age</td>
@@ -22,6 +31,7 @@
 
     <?php foreach ($list as $row) { ?>
         <tr>
+            <td><?= $row['id'] ?></td>
             <td><a href="/<?= $row['id'] ?>"><?= $row['name'] ?></a></td>
             <?php if ($row['mother_name']) { ?>
                 <td><a href="/<?= $row['mother_id'] ?>"><?= $row['mother_name'] ?></a></td>

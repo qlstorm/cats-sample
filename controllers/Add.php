@@ -9,10 +9,16 @@ class Add {
 
     public static function index($id = 0) {
         if ($_POST) { 
-            Connection::insert('cats', $_POST);
+            Connection::insert('cats', $_POST['row']);
 
             if (!$id) {
                 $id = Connection::insertId();
+            }
+
+            if ($_POST['father']['id']) {
+                $_POST['father']['cat_id'] = $id;
+                
+                Connection::insert('cats_fathers', $_POST['father']);
             }
 
             header('location: /' . (int)$id);
@@ -37,6 +43,10 @@ class Add {
         }
 
         $list = Cats::getMotherOptions((int)$id);
+
+        if (!$id) {
+            $fathersList = Cats::getFatherOptions();
+        }
 
         require 'views/cats_add.php';
     }

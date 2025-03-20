@@ -2,6 +2,10 @@
 
 use lib\Init;
 
+if (strpos($_SERVER['REQUEST_URI'], '.')) {
+    exit;
+}
+
 if (strlen($_SERVER['REQUEST_URI']) > 1 && $_SERVER['REQUEST_URI'][strlen($_SERVER['REQUEST_URI']) - 1] == '/') {
     header('location: ' . substr($_SERVER['REQUEST_URI'], 0, strlen($_SERVER['REQUEST_URI']) - 1));
 

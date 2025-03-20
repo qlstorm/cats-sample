@@ -15,7 +15,7 @@ class Cats {
             $filter[] = 'cats.age = ' . (int)$_GET['age'];
         }
 
-        if (isset($_GET['female']) && $_GET['female'] == 0) {
+        if (isset($_GET['female']) && $_GET['female'] == '0') {
             $filter[] = 'cats.female is null';
         }
 
@@ -33,6 +33,29 @@ class Cats {
             ';
         }
 
+        $order = 'cats.id';
+        $direction = 'desc';
+
+        if (isset($_GET['order']) && $_GET['order']) {
+            $orderData = explode(' ', $_GET['order']);
+
+            $order = Connection::escape($orderData[0]);
+
+            $direction = '';
+
+            if (isset($orderData[1])) {
+                $direction = Connection::escape($orderData[1]);
+            }
+        }
+
+        if ($order == 'fathers') {
+            $order = '
+                (
+                    select count(*) from cats_fathers where cat_id = cats.id
+                )
+            ';
+        }
+
         $query = '
             select
                 cats.*,
@@ -44,6 +67,8 @@ class Cats {
         if ($filter) {
             $query .= ' where ' . implode(' and ', $filter);
         }
+
+        $query .= ' order by ' . $order . ' ' . $direction;
 
         $res = Connection::query($query);
 
@@ -87,22 +112,31 @@ class Cats {
         return Connection::query($query)->fetch_all(MYSQLI_ASSOC);
     }
 
-    public static function getFatherOptions($catId) {
+    public static function getFatherOptions($catId = 0) {
+        $filter = [
+            'female is null'
+        ];
+
+        if ($catId) {
+            $filter[] = 'cats.id <> ' . (int)$catId;
+
+            $filter[] = 'age > (
+                select age from cats where id = ' . (int)$catId . '
+            )';
+
+            $filter[] = 'cats.id not in (
+                select id from cats_fathers where cat_id = ' . (int)$catId . '
+            )';
+        }
+
         $query = '
             select
                 cats.id,
                 cats.name
             from cats
-            where
-                cats.id <> ' . (int)$catId . ' and
-                female is null and
-                age > (
-                    select age from cats where id = ' . (int)$catId . '
-                ) and
-                cats.id not in (
-                    select id from cats_fathers where cat_id = ' . (int)$catId . '
-                )
         ';
+
+        $query .= ' where ' . implode(' and ', $filter);
 
         return Connection::query($query)->fetch_all(MYSQLI_ASSOC);
     }

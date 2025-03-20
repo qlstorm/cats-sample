@@ -32,10 +32,78 @@ class Index {
             $_GET['age'] = '';
         }
 
-        $femaleSelect = ['', ''];
+        $femaleFilter = [
+            '1' => [
+                'name' => 'yes',
+                'value' => '1',
+                'selected' => ''
+            ],
+            '0' => [
+                'name' => 'no',
+                'value' => '0',
+                'selected' => ''
+            ]
+        ];
 
         if (isset($_GET['female']) && strlen($_GET['female'])) {
-            $femaleSelect[(int)$_GET['female']] = 'selected';
+            $femaleFilter[$_GET['female']]['selected'] = 'selected';
+        }
+
+        $orders = [
+            'id desc' => [
+                'name' => 'id desc',
+                'value' => 'id desc',
+                'selected' => ''
+            ],
+            'id' => [
+                'name' => 'id',
+                'value' => 'id',
+                'selected' => ''
+            ],
+            'name desc' => [
+                'name' => 'name desc',
+                'value' => 'name desc',
+                'selected' => ''
+            ],
+            'name' => [
+                'name' => 'name',
+                'value' => 'name',
+                'selected' => ''
+            ],
+            'frmale desc' => [
+                'name' => 'frmale desc',
+                'value' => 'frmale desc',
+                'selected' => ''
+            ],
+            'frmale' => [
+                'name' => 'frmale',
+                'value' => 'frmale',
+                'selected' => ''
+            ],
+            'age desc' => [
+                'name' => 'age desc',
+                'value' => 'age desc',
+                'selected' => ''
+            ],
+            'age' => [
+                'name' => 'age',
+                'value' => 'age',
+                'selected' => ''
+            ],
+            'fathers desc' => [
+                'name' => 'fathers desc',
+                'value' => 'fathers desc',
+                'selected' => ''
+            ],
+            'fathers' => [
+                'name' => 'fathers',
+                'value' => 'fathers',
+                'selected' => ''
+            ]
+        ];
+
+        if (isset($_GET['order']) && $_GET['order']) {
+            $orders[$_GET['order']]['selected'] = 'selected';
         }
 
         require 'views/cats.php';
