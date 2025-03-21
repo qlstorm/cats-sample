@@ -24,7 +24,7 @@
 </p>
 <p>
     female<br>
-    <?= $row['female_title'] ?>
+    <?= $row['female_name'] ?>
 </p>
 <p>
     fathers:

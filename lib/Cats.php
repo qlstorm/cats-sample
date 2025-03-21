@@ -76,9 +76,9 @@ class Cats {
 
         while ($row = $res->fetch_assoc()) {
             if ($row['female']) {
-                $row['female_title'] = 'yes';
+                $row['female_name'] = 'yes';
             } else {
-                $row['female_title'] = 'no';
+                $row['female_name'] = 'no';
             }
 
             $list[] = $row;

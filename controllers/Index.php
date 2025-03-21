@@ -28,10 +28,6 @@ class Index {
 
         $list = Cats::getList();
 
-        if (!isset($_GET['age'])) {
-            $_GET['age'] = '';
-        }
-
         require 'views/cats.php';
     }
 

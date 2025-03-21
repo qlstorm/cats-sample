@@ -1,6 +1,6 @@
 
 <form style="display: inline-block;">
-    age: <input name="age" value="<?= $_GET['age'] ?>">
+    age: <input name="age" value="<?= lib\Html::value('age') ?>">
     female:
         <select name="female">
             <option></option>
@@ -49,7 +49,7 @@
                 <td>no</td>
             <?php } ?>
             <td><?= $row['age'] ?></td>
-            <td><?= $row['female_title'] ?></td>
+            <td><?= $row['female_name'] ?></td>
         </tr>
     <?php } ?>
 </table>

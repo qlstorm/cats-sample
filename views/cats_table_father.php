@@ -16,7 +16,7 @@
                 <td>no</td>
             <?php } ?>
             <td><?= $row['age'] ?></td>
-            <td><?= $row['female_title'] ?></td>
+            <td><?= $row['female_name'] ?></td>
             <td><a href="/index/deleteFather/<?= $row['id'] ?>/<?= $parentId ?>"><button>delete</button></a></td>
         </tr>
     <?php } ?>

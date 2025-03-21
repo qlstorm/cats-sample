@@ -26,27 +26,15 @@ class Add {
             return;
         }
 
-        $row = [
-            'name' => '',
-            'age' => 1,
-            'mother_id' => ''
-        ];
-
-        $femaleChecked = 'checked';
+        $row = [];
 
         if ($id) {
             $row = Connection::query('select * from cats where id = ' . (int)$id)->fetch_assoc();
-
-            if (!$row['female']) {
-                $femaleChecked = '';
-            }
+        } else {
+            $fathersList = Cats::getFatherOptions();
         }
 
         $list = Cats::getMotherOptions((int)$id);
-
-        if (!$id) {
-            $fathersList = Cats::getFatherOptions();
-        }
 
         require 'views/cats_add.php';
     }
