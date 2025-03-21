@@ -5,15 +5,25 @@
         <select name="female">
             <option></option>
 
-            <?php foreach ($femaleFilter as $femaleValue) { ?>
-                <option value="<?= $femaleValue['value'] ?>" <?= $femaleValue['selected'] ?>><?= $femaleValue['name'] ?></option>
-            <?php } ?>
+            <?php lib\Html::options([
+                '1' => 'yes',
+                '0' => 'no'
+            ], 'female') ?>
         </select>
     order:
         <select name="order">
-            <?php foreach ($orders as $order) { ?>
-                <option value="<?= $order['value'] ?>" <?= $order['selected'] ?>><?= $order['name'] ?></option>
-            <?php } ?>
+            <?php lib\Html::options([
+                'id desc' => 'id desc',
+                'id' => 'id',
+                'name desc' => 'name desc',
+                'name' => 'name',
+                'female desc' => 'female desc',
+                'female' => 'female',
+                'age desc' => 'age desc',
+                'age' => 'age',
+                'fathers desc' => 'fathers desc',
+                'fathers' => 'fathers'
+            ], 'order') ?>
         </select>
     <input type="submit">
 </form>
